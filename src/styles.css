@@ -1,0 +1,106 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "DM Sans", sans-serif;
+  --font-display: "Italiana", serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-leaf: var(--leaf);
+  --color-wine: var(--wine);
+  --color-ivory-deep: var(--ivory-deep);
+  --shadow-invitation: 0 16px 40px color-mix(in oklab, var(--wine) 20%, transparent);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+}
+
+:root {
+  --background: oklch(0.965 0.023 84);
+  --foreground: oklch(0.235 0.028 55);
+  --card: oklch(0.985 0.014 86);
+  --card-foreground: oklch(0.235 0.028 55);
+  --popover: oklch(0.985 0.014 86);
+  --popover-foreground: oklch(0.235 0.028 55);
+  --primary: oklch(0.34 0.105 22);
+  --primary-foreground: oklch(0.97 0.018 85);
+  --secondary: oklch(0.90 0.035 80);
+  --secondary-foreground: oklch(0.29 0.05 34);
+  --muted: oklch(0.91 0.025 84);
+  --muted-foreground: oklch(0.46 0.032 56);
+  --accent: oklch(0.59 0.092 78);
+  --accent-foreground: oklch(0.21 0.032 55);
+  --destructive: oklch(0.54 0.19 25);
+  --destructive-foreground: oklch(0.98 0.01 85);
+  --border: oklch(0.72 0.055 76 / 45%);
+  --input: oklch(0.72 0.055 76 / 45%);
+  --ring: oklch(0.59 0.092 78);
+  --gold: oklch(0.64 0.11 76);
+  --leaf: oklch(0.35 0.071 142);
+  --wine: oklch(0.34 0.105 22);
+  --ivory-deep: oklch(0.91 0.04 82);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scrollbar-width: thin; scrollbar-color: var(--gold) var(--background); }
+  body { margin: 0; background: var(--background); color: var(--foreground); font-family: var(--font-sans); overflow-x: hidden; }
+  [data-scene] { contain: layout paint style; }
+  [data-g] { contain: paint; }
+  @media (hover: hover) and (pointer: fine) { html { scroll-behavior: smooth; } }
+  button, a { -webkit-tap-highlight-color: transparent; }
+  ::selection { background: color-mix(in oklab, var(--gold) 35%, transparent); }
+}
+
+@utility paper-grain {
+  background-image: radial-gradient(circle at 20% 10%, color-mix(in oklab, var(--gold) 10%, transparent) 0 1px, transparent 1.5px), radial-gradient(circle at 80% 70%, color-mix(in oklab, var(--wine) 7%, transparent) 0 1px, transparent 1.4px);
+  background-size: 19px 23px, 27px 31px;
+}
+
+@utility temple-pattern {
+  background-image: linear-gradient(135deg, transparent 45%, color-mix(in oklab, var(--gold) 14%, transparent) 46% 54%, transparent 55%);
+  background-size: 18px 18px;
+}
+
+@utility perspective-scene { perspective: 1200px; transform-style: preserve-3d; }
+@utility preserve-3d { transform-style: preserve-3d; }
+
+@keyframes petal-drift {
+  0% { transform: translate3d(0, -12vh, 0) rotate(0deg); opacity: 0; }
+  12% { opacity: .65; }
+  100% { transform: translate3d(var(--petal-x, 20px), 112vh, 40px) rotate(520deg); opacity: 0; }
+}
+@keyframes float-ornament { 0%,100% { transform: translate3d(0,0,0) rotate(-2deg); } 50% { transform: translate3d(0,-12px,24px) rotate(2deg); } }
+@keyframes scroll-cue { 0%,100% { transform: translateY(0); opacity: .4; } 50% { transform: translateY(8px); opacity: 1; } }
+@keyframes shimmer { to { transform: translateX(160%); } }
+
+@utility petal-drift { animation: petal-drift var(--petal-duration, 13s) linear infinite; }
+@utility ornament-float { animation: float-ornament 6s ease-in-out infinite; }
+@utility scroll-cue { animation: scroll-cue 1.8s ease-in-out infinite; }
+
+.petal-drift{will-change:transform; backface-visibility:hidden; transform:translateZ(0)}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+}
